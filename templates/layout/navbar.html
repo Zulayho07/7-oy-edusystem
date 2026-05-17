@@ -1,0 +1,28 @@
+<nav class="navbar">
+  <a href="{% url 'home' %}" class="navbar-logo">Edu<span>.</span>Platform</a>
+
+  <ul class="navbar-links">
+    <li><a href="{% url 'home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>Kurslar</a></li>
+  </ul>
+</nav>
+
+<!-- Kurs reyli -->
+<div class="rail-wrapper">
+  <div class="rail">
+
+    <a href="{% url 'home' %}" class="rail-item {% if not course %}active{% endif %}">
+      <div class="rail-icon">🎓</div>
+      <span class="rail-label">Barchasi</span>
+      <span class="rail-count">{{ courses|length }} ta</span>
+    </a>
+
+    {% for c in courses %}
+    <a href="{% url 'course_detail' c.id %}" class="rail-item {% if course.id == c.id %}active{% endif %}">
+      <div class="rail-icon">📚</div>
+      <span class="rail-label">{{ c.name|truncatechars:16 }}</span>
+      <span class="rail-count">{{ c.students.count }} ta</span>
+    </a>
+    {% endfor %}
+
+  </div>
+</div>

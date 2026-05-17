@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Kurslar — EduPlatform{% endblock %}
+
+{% block content %}
+
+<div style="margin-bottom: 2rem;">
+  <h1 style="font-family: var(--serif); font-size: 2.2rem; margin-bottom: 8px;">
+    Barcha kurslar
+  </h1>
+  <p style="color: var(--muted); font-size: 0.9rem;">
+    Jami {{ courses|length }} ta kurs · {{ total_students }} talaba · {{ total_enrollments }} yozilish
+  </p>
+</div>
+
+{% if courses %}
+<div class="courses-grid">
+  {% for course in courses %}
+  <a href="{% url 'course_detail' course.id %}" class="course-card">
+    <div class="course-card-icon">📚</div>
+    <div class="course-card-name">{{ course.name }}</div>
+    <div class="course-card-meta">{{ course.duration }}</div>
+    <div class="course-card-footer">
+      <span class="course-card-count">{{ course.students.count }} talaba</span>
+      <span class="course-card-price">{{ course.price|floatformat:0 }} so'm</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="empty">Hali kurs qo'shilmagan.</div>
+{% endif %}
+
+{% endblock %}

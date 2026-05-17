@@ -1,0 +1,18 @@
+<script>
+  // Rail: active kursni belgilash
+  const railItems = document.querySelectorAll('.rail-item');
+  const currentPath = window.location.pathname;
+
+  railItems.forEach(item => {
+    const href = item.getAttribute('href');
+    if (href && currentPath === href) {
+      item.classList.add('active');
+    }
+  });
+
+  // Rail: tanlangan kursni markazga scroll qilish
+  const activeRail = document.querySelector('.rail-item.active');
+  if (activeRail) {
+    activeRail.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+</script>
