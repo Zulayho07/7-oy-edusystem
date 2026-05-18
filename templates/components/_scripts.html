@@ -1,5 +1,5 @@
 <script>
-  // Rail: active kursni belgilash
+
   const railItems = document.querySelectorAll('.rail-item');
   const currentPath = window.location.pathname;
 
@@ -10,7 +10,7 @@
     }
   });
 
-  // Rail: tanlangan kursni markazga scroll qilish
+
   const activeRail = document.querySelector('.rail-item.active');
   if (activeRail) {
     activeRail.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });

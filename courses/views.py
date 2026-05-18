@@ -42,14 +42,4 @@ def student_detail(request, student_id):
     return render(request, 'courses/student_detail.html', context)
 
 
-def enroll(request: HttpRequest, course_id, student_id):
-    course = Course.objects.get(id=course_id)
-    student = Student.objects.get(id=student_id)
-
-    if course.students.filter(id=student_id).exists():
-        course.students.remove(student)
-    else:
-        course.students.add(student)
-
-    return redirect('course_detail', course_id=course_id)
 

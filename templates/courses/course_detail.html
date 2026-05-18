@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ course.name }} — EduPlatform{% endblock %}
+
+{% block content %}
+
+<div class="detail-hero">
+  <div class="detail-hero-icon">📚</div>
+  <div>
+    <h1 class="detail-title">{{ course.name }}</h1>
+    <p class="detail-meta">{{ course.duration }}</p>
+  </div>
+</div>
+
+
+<div class="detail-stats">
+  <div class="stat-box">
+    <div class="stat-label">Talabalar</div>
+    <div class="stat-value">{{ students|length }}</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Davomiyligi</div>
+    <div class="stat-value" style="font-size: 1.1rem; padding-top: 4px;">{{ course.duration }}</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-label">Narxi</div>
+    <div class="stat-value" style="font-size: 1.1rem; padding-top: 4px; color: var(--accent);">
+      {{ course.price|floatformat:0 }} so'm
+    </div>
+  </div>
+</div>
+
+
+<div class="section-label">O'quvchilar — {{ students|length }} ta</div>
+
+{% if students %}
+<div class="students-grid">
+  {% for student in students %}
+  <a href="" class="student-card">
+    <div class="student-avatar">
+      {{ student.full_name|first|upper }}
+    </div>
+    <div>
+      <div class="student-name">{{ student.full_name }}</div>
+      <div class="student-phone">{{ student.phone_number }}</div>
+    </div>
+    <span class="student-age">{{ student.age }} yosh</span>
+  </a>
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="empty">Bu kursga hali talaba yozilmagan.</div>
+{% endif %}
+
+{% endblock %}
