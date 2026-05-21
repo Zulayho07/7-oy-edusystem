@@ -16,15 +16,31 @@
 {% if courses %}
 <div class="courses-grid">
   {% for course in courses %}
-  <a href="{% url 'course_detail' course.id %}" class="course-card">
-    <div class="course-card-icon">📚</div>
-    <div class="course-card-name">{{ course.name }}</div>
-    <div class="course-card-meta">{{ course.duration }}</div>
-    <div class="course-card-footer">
-      <span class="course-card-count">{{ course.students.count }} talaba</span>
-      <span class="course-card-price">{{ course.price|floatformat:0 }} so'm</span>
+  <div style="position: relative;">
+
+    <a href="{% url 'course_detail' course.id %}" class="course-card" style="display: block; height: 100%;">
+      <div class="course-card-icon">📚</div>
+      <div class="course-card-name">{{ course.name }}</div>
+      <div class="course-card-meta">{{ course.duration }}</div>
+      <div class="course-card-footer">
+        <span class="course-card-count">{{ course.students.count }} talaba</span>
+        <span class="course-card-price">{{ course.price|floatformat:0 }} so'm</span>
+      </div>
+    </a>
+
+    <!-- LIKE TUGMASI (Karta ustiga mustaqil qatlam sifatida joylashtirildi, rangga mutloq ta'sir qilmaydi) -->
+    <div style="position: absolute; top: 15px; right: 15px; display: flex; align-items: center; gap: 4px; background: rgba(0, 0, 0, 0.08); padding: 4px 10px; border-radius: 20px; z-index: 10;">
+      <a href="{% url 'like_course' course.id %}" style="text-decoration: none; line-height: 1; transition: transform 0.1s ease;" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'">
+        {% if request.user.student in course.likes.all %}
+            <span style="font-size: 1.1rem; cursor: pointer;">❤️</span>
+        {% else %}
+            <span style="font-size: 1.1rem; cursor: pointer;">🤍</span>
+        {% endif %}
+      </a>
+      <span style="font-size: 0.85rem; font-weight: bold; color: #333;">{{ course.likes.count }}</span>
     </div>
-  </a>
+
+  </div>
   {% endfor %}
 </div>
 

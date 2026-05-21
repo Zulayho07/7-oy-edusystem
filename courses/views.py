@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course, Student
 
 
@@ -42,4 +43,15 @@ def student_detail(request, student_id):
     return render(request, 'courses/student_detail.html', context)
 
 
+@login_required(login_url='home')
+def like_course(request, course_id):
+    course = Course.objects.get(pk=course_id)
 
+    student = Student.objects.first()
+
+    if student in course.likes.all():
+        course.likes.remove(student)
+    else:
+        course.likes.add(student)
+
+    return redirect('course_detail', course_id=course.pk)

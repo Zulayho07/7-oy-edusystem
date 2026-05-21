@@ -4,30 +4,45 @@
 
 {% block content %}
 
-<div class="detail-hero">
-  <div class="detail-hero-icon">📚</div>
-  <div>
-    <h1 class="detail-title">{{ course.name }}</h1>
-    <p class="detail-meta">{{ course.duration }}</p>
-  </div>
+<div class="detail-hero" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <div class="detail-hero-icon">📚</div>
+        <div>
+            <h1 class="detail-title">{{ course.name }}</h1>
+            <p class="detail-meta">{{ course.duration }}</p>
+        </div>
+    </div>
+
+    <div class="like-section" style="display: flex; align-items: center; gap: 8px;">
+        <a href="{% url 'like_course' course.id %}" class="like-btn" style="text-decoration: none; transition: transform 0.2s ease;">
+            {% if request.user.student in course.likes.all %}
+                <span style="color: #e63946; font-size: 2rem; cursor: pointer;">❤️</span>
+            {% else %}
+                <span style="color: #a8dadc; font-size: 2rem; cursor: pointer;">🤍</span>
+            {% endif %}
+        </a>
+        <span style="font-weight: bold; color: white; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; font-size: 0.9rem;">
+            {{ course.likes.count }}
+        </span>
+    </div>
 </div>
 
-
+<!-- 2. STATISTIKA QISMI -->
 <div class="detail-stats">
-  <div class="stat-box">
-    <div class="stat-label">Talabalar</div>
-    <div class="stat-value">{{ students|length }}</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-label">Davomiyligi</div>
-    <div class="stat-value" style="font-size: 1.1rem; padding-top: 4px;">{{ course.duration }}</div>
-  </div>
-  <div class="stat-box">
-    <div class="stat-label">Narxi</div>
-    <div class="stat-value" style="font-size: 1.1rem; padding-top: 4px; color: var(--accent);">
-      {{ course.price|floatformat:0 }} so'm
+    <div class="stat-box">
+        <div class="stat-label">Talabalar</div>
+        <div class="stat-value">{{ students|length }}</div>
     </div>
-  </div>
+    <div class="stat-box">
+        <div class="stat-label">Davomiyligi</div>
+        <div class="stat-value" style="font-size: 1.1rem; padding-top: 4px;">{{ course.duration }}</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-label">Narxi</div>
+        <div class="stat-value" style="font-size: 1.1rem; padding-top: 4px; color: var(--accent);">
+            {{ course.price|floatformat:0 }} so'm
+        </div>
+    </div>
 </div>
 
 
@@ -35,18 +50,18 @@
 
 {% if students %}
 <div class="students-grid">
-  {% for student in students %}
-  <a href="" class="student-card">
-    <div class="student-avatar">
-      {{ student.full_name|first|upper }}
-    </div>
-    <div>
-      <div class="student-name">{{ student.full_name }}</div>
-      <div class="student-phone">{{ student.phone_number }}</div>
-    </div>
-    <span class="student-age">{{ student.age }} yosh</span>
-  </a>
-  {% endfor %}
+    {% for student in students %}
+    <a href="" class="student-card">
+        <div class="student-avatar">
+            {{ student.full_name|first|upper }}
+        </div>
+        <div>
+            <div class="student-name">{{ student.full_name }}</div>
+            <div class="student-phone">{{ student.phone_number }}</div>
+        </div>
+        <span class="student-age">{{ student.age }} yosh</span>
+    </a>
+    {% endfor %}
 </div>
 
 {% else %}
