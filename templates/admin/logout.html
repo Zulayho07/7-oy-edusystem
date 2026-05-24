@@ -1,0 +1,253 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% trans 'Logged out' %} | Admin Panel{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Sora', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            ink: {
+              50:  '#f4f3f0',
+              100: '#e8e6e0',
+              200: '#cdc9bf',
+              300: '#b0aa9e',
+              400: '#928b7c',
+              500: '#756d5e',
+              600: '#5c5549',
+              700: '#433e36',
+              800: '#2b2824',
+              900: '#161411',
+              950: '#0b0a08',
+            },
+            ember: {
+              400: '#f59a4f',
+              500: '#e8812a',
+              600: '#c96719',
+            },
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Sora', sans-serif; }
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .dot-grid {
+      background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .glow-orb-1 {
+      background: radial-gradient(ellipse, rgba(99,57,14,0.2) 0%, transparent 70%);
+    }
+    .glow-orb-2 {
+      background: radial-gradient(ellipse, rgba(232,129,42,0.1) 0%, transparent 70%);
+    }
+    .btn-login {
+      background: linear-gradient(135deg, #e8812a 0%, #c96719 100%);
+      transition: all 0.2s ease;
+    }
+    .btn-login:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(232,129,42,0.35);
+    }
+    .btn-login:active { transform: translateY(0); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      transition: all 0.2s ease;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .tag {
+      background: rgba(232,129,42,0.15);
+      border: 1px solid rgba(232,129,42,0.25);
+      color: #f59a4f;
+    }
+    .divider {
+      border-color: rgba(255,255,255,0.07);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.6s ease forwards; }
+    .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+    .fade-up-2 { animation-delay: 0.2s; opacity: 0; }
+    .fade-up-3 { animation-delay: 0.3s; opacity: 0; }
+    .fade-up-4 { animation-delay: 0.42s; opacity: 0; }
+
+    @keyframes checkmark {
+      0%   { stroke-dashoffset: 60; opacity: 0; }
+      30%  { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    .check-path {
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: checkmark 0.7s ease 0.25s forwards;
+    }
+    @keyframes ringPulse {
+      0%   { transform: scale(0.8); opacity: 0; }
+      60%  { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .ring-anim { animation: ringPulse 0.5s ease 0.15s both; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+    .float-1 { animation: float 7s ease-in-out infinite; }
+    .float-2 { animation: float 9s ease-in-out infinite; animation-delay: 2s; }
+
+    /* countdown ring */
+    #cd-ring {
+      transition: stroke-dashoffset 1s linear;
+    }
+  </style>
+</head>
+
+<body class="h-full bg-ink-950 text-ink-50 overflow-hidden">
+
+  <!-- Background -->
+  <div class="fixed inset-0 dot-grid pointer-events-none"></div>
+  <div class="glow-orb-1 fixed -top-40 -left-40 w-[600px] h-[600px] pointer-events-none"></div>
+  <div class="glow-orb-2 fixed -bottom-60 -right-40 w-[700px] h-[700px] pointer-events-none"></div>
+
+  <!-- Floating decorations -->
+  <div class="float-1 fixed top-20 left-16 opacity-15 pointer-events-none hidden lg:block">
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+      <rect x="4" y="4" width="48" height="48" rx="10" stroke="#e8812a" stroke-width="1.2" stroke-dasharray="5 5"/>
+    </svg>
+  </div>
+  <div class="float-2 fixed bottom-28 right-20 opacity-10 pointer-events-none hidden lg:block">
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+      <circle cx="22" cy="22" r="18" stroke="#e8812a" stroke-width="1.2" stroke-dasharray="4 4"/>
+    </svg>
+  </div>
+
+  <!-- Main -->
+  <div class="min-h-screen flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md">
+
+      <!-- Logo -->
+      <div class="text-center mb-10 fade-up fade-up-1">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl glass-card mb-5">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 3L25 9V19L14 25L3 19V9L14 3Z" stroke="#e8812a" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M14 3V25M3 9L25 19M25 9L3 19" stroke="#e8812a" stroke-width="1.2" stroke-opacity="0.4"/>
+            <circle cx="14" cy="14" r="3" fill="#e8812a"/>
+          </svg>
+        </div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full tag text-xs font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-ember-400 inline-block"></span>
+          Admin Panel
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="glass-card rounded-3xl p-8 text-center fade-up fade-up-2">
+
+        <!-- Success icon with animated ring -->
+        <div class="flex justify-center mb-6">
+          <div class="relative ring-anim">
+            <!-- Countdown ring SVG -->
+            <svg width="80" height="80" viewBox="0 0 80 80" class="-rotate-90">
+              <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+              <circle id="cd-ring" cx="40" cy="40" r="34" fill="none"
+                stroke="#e8812a" stroke-width="3"
+                stroke-linecap="round"
+                stroke-dasharray="213.6"
+                stroke-dashoffset="0"/>
+            </svg>
+            <!-- Icon center -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <circle cx="16" cy="16" r="14" fill="rgba(232,129,42,0.15)"/>
+                <path class="check-path" d="M10 16.5l4.5 4.5 8-9"
+                  stroke="#e8812a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <h1 class="text-xl font-semibold text-ink-50 mb-2">{% trans "You've been signed out" %}</h1>
+        <p class="text-sm text-ink-400 mb-8 leading-relaxed">
+          {% trans "Your session has ended securely." %}<br/>
+          {% trans "See you next time." %}
+        </p>
+
+        <hr class="divider mb-8" />
+
+        <!-- Actions -->
+        <div class="flex flex-col gap-3 fade-up fade-up-3">
+          <a href="{% url 'admin:login' %}"
+            class="btn-login w-full py-3 rounded-xl text-sm font-semibold text-white tracking-wide inline-block">
+            {% trans "Sign in again" %}
+          </a>
+          <a href="/"
+            class="btn-ghost w-full py-3 rounded-xl text-sm font-medium text-ink-300 inline-block">
+            {% trans "Go to homepage" %}
+          </a>
+        </div>
+
+        <!-- Auto-redirect info -->
+        <p class="mt-6 text-xs text-ink-600 fade-up fade-up-4">
+          {% trans "Redirecting to login in" %}
+          <span id="countdown" class="text-ember-400 font-mono font-medium">10</span>
+          {% trans "seconds…" %}
+        </p>
+
+      </div>
+
+      <!-- Footer -->
+      <p class="text-center mt-6 text-xs text-ink-700 fade-up fade-up-4" style="animation-delay:0.5s;opacity:0">
+        {% trans "Session terminated · Data secured" %}
+      </p>
+
+    </div>
+  </div>
+
+  <script>
+    const total = 10;
+    let remaining = total;
+    const countEl = document.getElementById('countdown');
+    const ring    = document.getElementById('cd-ring');
+    const circumference = 213.6;
+
+    ring.style.strokeDashoffset = '0';
+
+    const interval = setInterval(() => {
+      remaining--;
+      countEl.textContent = remaining;
+      const progress = (total - remaining) / total;
+      ring.style.strokeDashoffset = circumference * progress;
+
+      if (remaining <= 0) {
+        clearInterval(interval);
+        window.location.href = "{% url 'admin:login' %}";
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>

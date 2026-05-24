@@ -4,9 +4,9 @@ from django.db import models
 class Student(models.Model):
     full_name = models.CharField(max_length=100, verbose_name='F.I.Sh')
     age = models.PositiveIntegerField(verbose_name='Yoshi')
-    gender=models.CharField(max_length=7, default='Male', verbose_name='Jinsi')
+    gender = models.CharField(max_length=7, default='Male', verbose_name='Jinsi')
     phone_number = models.CharField(max_length=20, verbose_name='Telefon raqami')
-    address = models.TextField(blank=True, null=True,  verbose_name='Manzili')
+    address = models.TextField(blank=True, null=True, verbose_name='Manzili')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Ro\'yxatdan o\'tgan sana')
 
     def __str__(self):
@@ -25,7 +25,7 @@ class Course(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name='Batafsil')
     price = models.PositiveIntegerField(verbose_name='Narxi')
     duration = models.CharField(max_length=50, verbose_name='Davomiyligi')
-    level=models.CharField(max_length=50, default='Beginner', verbose_name='Darajasi')
+    level = models.CharField(max_length=50, default='Beginner', verbose_name='Darajasi')
     is_active = models.BooleanField(default=True, verbose_name='Faolmi')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Oxirgi tahrirlangan vaqt')
 
@@ -41,3 +41,10 @@ class Course(models.Model):
     class Meta:
         verbose_name = "Kurs"
         verbose_name_plural = "Kurslar"
+
+
+class Comment(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    comment = models.TextField(blank=True, null=True, verbose_name='Batafsil')
+    user = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
